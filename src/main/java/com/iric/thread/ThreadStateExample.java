@@ -3,7 +3,14 @@ package com.iric.thread;
 
 import com.iric.util.SleepUtils;
 
-public class ThreadState {
+/**
+ * @Author Yu.Xing
+ * @Description  查看线程的各个状态。
+ * 1.通过jps查看当前进程号
+ * 2.jstack 查看当前线程的各个状态
+ * @Date 10:21 2022/8/17
+ **/
+public class ThreadStateExample {
     public static void main(String[] args) {
         new Thread(new TimeWaiting(), "TimeWaitingThread").start();
         new Thread(new Waiting(), "WaitingThread").start(); // 使用两个Blocked线程，一个获取锁成功，另一个被阻塞

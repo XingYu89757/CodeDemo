@@ -3,7 +3,7 @@ package com.iric.map;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class LinkedHashMapDemo {
+public class LinkedHashMapExample {
     /**
      * @Author Yu.Xing
      * @Description LinkedHashMap有一个 removeEldestEntry(Map.Entry eldest)方法，通过覆盖这个方法，加入一定的条件，满足条件返回true。当put进新的值方法返回true时，便移除该map中最老的键和值。

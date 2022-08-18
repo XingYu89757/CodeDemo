@@ -4,6 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
 
+/**
+ * @Author Yu.Xing
+ * @Description Callable和future的常用方法demo
+ * 参考来源：https://www.callicoder.com/java-callable-and-future-tutorial/
+ **/
 public class FutureAndCallableExample {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
@@ -164,8 +169,9 @@ public class FutureAndCallableExample {
         String result = executorService.invokeAny(Arrays.asList(task1, task2, task3));
 
         System.out.println(result);
-
         executorService.shutdown();
     }
+
+
 
 }
