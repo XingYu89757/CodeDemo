@@ -2,6 +2,10 @@ package com.iric.thread;
 
 
 import com.iric.util.SleepUtils;
+import org.apache.commons.lang3.ThreadUtils;
+
+import javax.xml.transform.Source;
+import java.sql.SQLOutput;
 
 /**
  * @Author Yu.Xing
@@ -12,10 +16,20 @@ import com.iric.util.SleepUtils;
  **/
 public class ThreadStateExample {
     public static void main(String[] args) {
-        new Thread(new TimeWaiting(), "TimeWaitingThread").start();
-        new Thread(new Waiting(), "WaitingThread").start(); // 使用两个Blocked线程，一个获取锁成功，另一个被阻塞
-        new Thread(new Blocked(), "BlockedThread-1").start();
-        new Thread(new Blocked(), "BlockedThread-2").start();
+        //查看线程的状态
+//        new Thread(new TimeWaiting(), "TimeWaitingThread").start();
+//        new Thread(new Waiting(), "WaitingThread").start(); // 使用两个Blocked线程，一个获取锁成功，另一个被阻塞
+//        new Thread(new Blocked(), "BlockedThread-1").start();
+//        new Thread(new Blocked(), "BlockedThread-2").start();
+        //测试守护线程特性
+        Thread thread = new Thread(new DaemonRunner(),"DaemonRunner");
+        thread.setDaemon(true);
+        thread.start();
+        synchronized (ThreadStateExample.class){
+            SleepUtils.second(10);
+
+        }
+
     }
 
     // 该线程不断地进行睡眠
@@ -55,5 +69,26 @@ public class ThreadStateExample {
             }
         }
     }
+
+    /**
+     * @Author Yu.Xing
+     * @Description
+     * 注意： Daemon属性需要在启动线程之前设置，不能在启动线程之后设置
+     * Daemon线程被用作完成支持性工作，虚拟机需要推出的时，Java虚拟机中的所有Daemon线程都需要立即终止
+     **/
+    static  class DaemonRunner implements Runnable{
+
+        @Override
+        public void run() {
+            System.out.println("DaemonThread start");
+            try{
+                SleepUtils.second(10);
+            }finally {
+                System.out.println("DaemonThread finally run.");
+            }
+
+        }
+    }
+
 }
 
