@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+	<!-- <include resource="org/springframework/boot/logging/logback/base.xml" />
+	<jmxConfigurator /> -->
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>
+				[%d{yyyy-MM-dd HH:mm:ss}] %-5level [%thread] %logger{15} [%line] -%msg%n
+			</pattern>
+			<charset>UTF-8</charset> <!-- 此处设置字符集 -->
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--rollover daily 配置日志所生成的目录以及生成文件名的规则-->
+			<!--<fileNamePattern>logs/%d{yyyy-MM-dd}.log-->
+			<fileNamePattern>/opt/project/demo/%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
+		<prudent>true</prudent>
+	</appender>
+	<!-- Console output -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				<!--| [%p][%c][%M][%L]-->
+				<!--[%-5level] [%date{yyyy-MM-dd HH:mm:ss}] | %msg%n-->
+				[%d{yyyy-MM-dd HH:mm:ss}] %-5level [%thread] %logger{15} [%line] -%msg%n
+			</pattern>
+			<charset>UTF-8</charset> <!-- 此处设置字符集 -->
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
+	</appender>
+
+	<root level="DEBUG">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="STDOUT" />
+	</root>
+
+	<logger name="org.springframework" level="ERROR" />
+	<logger name="org.mybatis" level="INFO" />
+	<logger name="springfox.documentation" level="WARN" />
+	<logger name="org.thymeleaf" level="WARN" />
+	<logger name="org.apache" level="ERROR"/>
+	<logger name="com.ctrip.framework.apollo" level="WARN"/>
+	<logger name="com.zaxxer.hikari" level="ERROR"/>
+	<logger name="io.netty.buffer.ByteBufUtil" level="ERROR"/>
+	<logger name="io.netty.util" level="ERROR"/>
+	<logger name="org.eclipse.jetty" level="ERROR"/>
+	<logger name="org.mybatis.spring.mapper.ClassPathMapperScanner" level="ERROR"/>
+	<!--<logger name="org.apache.zookeeper.ClientCnxn" level="ERROR"/>-->
+	<logger name="com.baomidou.mybatisplus.core.MybatisConfiguration" level="ERROR"/>
+	<!-- log4j.xml -->
+	<logger name="jdbc.sqlonly" level="WARN"/>
+	<logger name="jdbc.sqltiming" level="INFO"/>
+	<logger name="jdbc.resultsettable" level="INFO"/>
+	<logger name="jdbc.resultset" level="WARN"/>
+	<logger name="jdbc.connection" level="WARN"/>
+	<logger name="jdbc.audit" level="WARN"/>
+
+	<!-- 根据需要关闭不必要的日志输出 -->
+	<logger name="io.lettuce.core" level="OFF" />
+	<logger name="jdbc.connection" level="OFF" />
+	<logger name="jdbc.audit" level="OFF" />
+	<logger name="jdbc.resultset" level="OFF" />
+	<logger name="jdbc.sqlonly" level="OFF" />
+	<logger name="jdbc.sqltiming" level="INFO" />
+	<logger name="jdbc.resultsettable" level="INFO"/>
+</configuration>

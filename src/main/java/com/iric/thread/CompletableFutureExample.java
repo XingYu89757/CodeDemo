@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class CompletableFutureExample {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         //runAsyncMethod();
-        //runAsyncMethodByLambda();
+        runAsyncMethodByLambda();
         //supplyAsyncMethod();
         //supplyAsyncByExecutor();
         //thenApplyMethod();
@@ -23,7 +23,7 @@ public class CompletableFutureExample {
         //thenComposeMethod();
         //thenCombineMethod();
         //exceptionallyMethod();
-        threadException();
+        //threadException();
     }
 
     /**
@@ -147,7 +147,7 @@ public class CompletableFutureExample {
 
     /**
      * @Author Yu.Xing
-     * @Description可以通过附加一系列的thenApply()在回调方法 在CompletableFuture写一个连续的转换。这样的话，结果中的一个 thenApply方法就会传递给该系列的另外一个 thenApply方法。
+     * @Description 可以通过附加一系列的thenApply()在回调方法 在CompletableFuture写一个连续的转换。这样的话，结果中的一个 thenApply方法就会传递给该系列的另外一个 thenApply方法。
      **/
     public static void thenApplyMethod2() throws ExecutionException, InterruptedException {
         CompletableFuture<String> welcomeText = CompletableFuture.supplyAsync(() -> {

@@ -1,0 +1,14 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/shard?serverTimezone=GMT
+    username: root
+    password: 123456
+logging:
+  level:
+    ROOT: warn
+    com.iric: debug
