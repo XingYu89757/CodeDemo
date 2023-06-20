@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>实时监控</title>
+	<style>
+        .item {
+            display: flex;
+            border-bottom: 1px solid #000000;
+            justify-content: space-between;
+            width: 30%;
+            line-height: 50px;
+            height: 50px;
+        }
+
+        .item span:nth-child(2) {
+            margin-right: 10px;
+            margin-top: 15px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #55ff00;
+        }
+
+        .nowI {
+            background: #ff0000 !important;
+        }
+	</style>
+</head>
+<body>
+<div id="app">
+	<div v-for="item in list" class="item">
+		<span>{{item.id}}.{{item.name}}</span>
+		<span :class='item.state==-1?"nowI":""'></span>
+	</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.min.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            list: [{
+                id: 1,
+                name: '张三',
+                state: 1
+            },
+                {
+                    id: 2,
+                    name: '李四',
+                    state: 1,
+                },
+                {
+                    id: 3,
+                    name: '王五',
+                    state: 1
+                },
+                {
+                    id: 4,
+                    name: '韩梅梅',
+                    state: 1
+                },
+                {
+                    id: 5,
+                    name: '李磊',
+                    state: 1
+                },
+            ]
+        }
+    })
+
+    var webSocket = null;
+    var ws = null;
+    var lockReconnect = false;  //避免ws重复连接
+    var uid = getUUID()
+        //创建WebSocket对象
+   var wsurl = ("ws://192.168.100.179:25030/notice/" + uid); 
+    createWebSocket(wsurl)
+    function createWebSocket(url) {
+        try{
+            if('WebSocket' in window){
+                ws = new WebSocket(url);
+            }else if('MozWebSocket' in window){  
+                ws = new MozWebSocket(url);
+            }else{
+                
+                layer.alert("您的浏览器不支持websocket协议,建议使用新版谷歌、火狐等浏览器，请勿使用IE10以下浏览器，360浏览器请使用极速模式，不要使用兼容模式！"); 
+             
+            }
+            initEventHandle();
+        }catch(e){
+            reconnect(url);
+            console.log(e);
+        }     
+    }
+    function initEventHandle() {
+        ws.onclose = function () {
+            reconnect(wsurl);
+            console.log("llws连接关闭!"+new Date().toUTCString());
+        };
+        ws.onerror = function () {
+            reconnect(wsurl);
+            console.log("llws连接错误!");
+        };
+        ws.onopen = function () {
+            heartCheck.reset().start();      //心跳检测重置
+            console.log("llws连接成功!"+new Date().toUTCString());
+        };
+        ws.onmessage = function (msg) {    //如果获取到消息，心跳检测重置
+            console.log(msg)
+            heartCheck.reset().start();      //心跳检测重置
+            //处理消息
+            var serverMsg = msg.data;
+            var t_id = parseInt(serverMsg) //服务端发过来的消息，ID，string需转化为int类型才能比较
+            for (var i = 0; i < vm.list.length; i++) {
+                var item = vm.list[i];
+                if (item.id === t_id) {
+                    item.state = -1;
+                    vm.list.splice(i, 1, item)
+                    break;
+                }
+            }
+        };
+    }
+    // if ('WebSocket' in window) {
+    //     var uid = getUUID()
+    //     //创建WebSocket对象
+    //     webSocket = new WebSocket("ws://192.168.100.179:25030/notice/" + uid);
+    //     //连接成功
+    //     webSocket.onopen = function () {
+    //         console.log("已连接");
+    //         webSocket.send("消息发送测试")
+    //         heartCheck.reset().start();      //心跳检测重置
+	// 		document.write(uid)
+    //     }
+    //     //接收到消息
+    //     webSocket.onmessage = function (msg) {
+    //         heartCheck.reset().start();      //心跳检测重置
+    //         //处理消息
+    //         var serverMsg = msg.data;
+    //         var t_id = parseInt(serverMsg) //服务端发过来的消息，ID，string需转化为int类型才能比较
+    //         for (var i = 0; i < vm.list.length; i++) {
+    //             var item = vm.list[i];
+    //             if (item.id === t_id) {
+    //                 item.state = -1;
+    //                 vm.list.splice(i, 1, item)
+    //                 break;
+    //             }
+    //         }
+    //     };
+    //     //关闭事件
+    //     webSocket.onclose = function () {
+
+    //         reconnect()
+    //         console.log("websocket已关闭");
+    //     };
+    //     //发生了错误事件
+    //     webSocket.onerror = function () {
+    //         reconnect()
+
+    //         console.log("websocket发生了错误");
+    //     }
+    // } else {
+    //     alert("很遗憾，您的浏览器不支持WebSocket！")
+    // }
+    //心跳检测
+    var heartCheck = {
+        timeout: 50000,        //9分钟发一次心跳
+        timeoutObj: null,
+        serverTimeoutObj: null,
+        reset: function(){
+            clearTimeout(this.timeoutObj);
+            clearTimeout(this.serverTimeoutObj);
+            return this;
+        },
+        start: function(){
+            var self = this;
+            this.timeoutObj = setTimeout(function(){
+                //这里发送一个心跳，后端收到后，返回一个心跳消息，
+                //onmessage拿到返回的心跳就说明连接正常
+                ws.send("ping");
+                console.log("ping!")
+                self.serverTimeoutObj = setTimeout(function(){//如果超过一定时间还没重置，说明后端主动断开了
+                    ws.close();     //如果onclose会执行reconnect，我们执行ws.close()就行了.如果直接执行reconnect 会触发onclose导致重连两次
+                }, self.timeout)
+            }, this.timeout)
+        }
+    }
+    function reconnect(url) {
+        if(lockReconnect) return;
+        lockReconnect = true;
+        setTimeout(function () {     //没连接上会一直重连，设置延迟避免请求过多
+            createWebSocket(url);
+            lockReconnect = false;
+        }, 2000);
+    }
+    function getUUID() { //获取唯一的UUID
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0,
+            v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    
+
+</script>
+</body>
+</html>
