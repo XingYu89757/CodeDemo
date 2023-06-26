@@ -1,4 +1,4 @@
-package com.iric.test;
+package com.iric;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

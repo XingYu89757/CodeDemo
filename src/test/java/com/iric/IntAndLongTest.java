@@ -1,4 +1,4 @@
-package com.iric.test;
+package com.iric;
 
 import cn.hutool.core.util.ObjectUtil;
 

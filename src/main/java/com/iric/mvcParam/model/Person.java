@@ -1,6 +1,8 @@
 package com.iric.mvcParam.model;
 
 import com.baomidou.mybatisplus.generator.config.INameConvert;
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
@@ -20,4 +22,11 @@ public class Person {
      * 年龄
      */
     private int age;
+
+    /**
+     * 地址
+     */
+
+   @JsonAlias("ADDRESS")
+    private String address;
 }

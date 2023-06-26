@@ -1,4 +1,4 @@
-package com.iric.test;
+package com.iric;
 
 public class test {
     public static void main(String[] args) {
