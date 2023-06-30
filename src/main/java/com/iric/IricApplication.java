@@ -25,7 +25,7 @@ public class IricApplication {
 //            factory.afterPropertiesSet();
 //            ServerSocket serverSocket = factory.getObject();
 //            serverSocket.start();
-//            System.out.println("WebSocket server started on port " + port);
+//            System.out.println("WebSocket Server started on port " + port);
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }

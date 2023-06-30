@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @ServerEndpoint 注解是一个类层次的注解，它的功能主要是将目前的类定义成一个websocket服务器端,
  * 注解的值将被用于监听用户连接的终端访问URL地址,客户端可以通过这个URL来连接到WebSocket服务器端
  */
-@ServerEndpoint("/notice/{userId}")
+@ServerEndpoint("/ws/fanout/andun.web.sos.notify/{userId}")
 @Component
 @Slf4j
 public class NoticeWebsocket {
@@ -55,7 +55,7 @@ public class NoticeWebsocket {
         this.userId = userId;
         this.session = session;
         clients.put(tempSid, session);
-        session.setMaxIdleTimeout(20 * 1000);
+        session.setMaxIdleTimeout(30 * 1000);
         long maxIdleTimeout = session.getMaxIdleTimeout();
         log.info("MaxIdleTimeout:{}", maxIdleTimeout);
         Set<String> clientSet = conns.get(userId);
