@@ -6,6 +6,7 @@ import org.apache.commons.lang3.ThreadUtils;
 
 import javax.xml.transform.Source;
 import java.sql.SQLOutput;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @Author Yu.Xing

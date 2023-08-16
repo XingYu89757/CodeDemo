@@ -4,6 +4,7 @@ import com.iric.rmi.api.UserInter;
 import com.iric.rmi.model.User;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.ObjectInputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 

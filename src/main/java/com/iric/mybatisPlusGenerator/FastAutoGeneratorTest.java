@@ -18,14 +18,14 @@ public class FastAutoGeneratorTest extends BaseGeneratorTest {
      * 数据源配置
      */
     private static final DataSourceConfig.Builder DATA_SOURCE_CONFIG = new DataSourceConfig
-            .Builder("jdbc:mysql://192.168.100.245:3307/andun_hospital_service?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT", "andunroot", "andun12180680#");
+            .Builder("jdbc:mysql://192.168.100.245:3307/andun_cms?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT", "andunroot", "andun12180680#");
 
 
     public static void main(String[] args) throws SQLException {
         String srcPath = System.getProperty("user.dir") + "/src/main/java/";//项目源码绝对路径;//项目源码绝对路径
         String resourcesPath = System.getProperty("user.dir") + "/src/main/resources";
 
-        FastAutoGenerator.create("jdbc:mysql://192.168.100.245:3307/andun_hospital_service?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT", "andunroot", "andun12180680#")
+        FastAutoGenerator.create("jdbc:mysql://192.168.100.245:3307/andun_statistics?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT", "andunroot", "andun12180680#")
                 .globalConfig(builder -> {
                     builder.author("xingyu") // 设置作者
                             .dateType(DateType.TIME_PACK)//设置时间类型
@@ -39,8 +39,8 @@ public class FastAutoGeneratorTest extends BaseGeneratorTest {
                             .pathInfo(Collections.singletonMap(OutputFile.xml, resourcesPath + "/mapper")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude("sys_dictionary_extra") // 设置需要生成的表名
-                            .addTablePrefix(""); // 设置过滤表前缀
+                    builder.addInclude("h_chronic_disease_risks_statistics","h_future_disease_risks_statistics","h_tumor_risks_statistics","h_active_health_statistics") // 设置需要生成的表名
+                            .addTablePrefix(); // 设置过滤表前缀
                     builder.entityBuilder() //设置entity
 //                            .enableColumnConstant()
                             .enableChainModel()

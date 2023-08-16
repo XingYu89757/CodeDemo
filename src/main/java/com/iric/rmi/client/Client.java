@@ -10,6 +10,9 @@ import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+/**
+ * 查看demo：http://runxinzhi.com/alimayun-p-12688430.html
+ */
 @Slf4j
 public class Client {
     public static void main(String[] args) {

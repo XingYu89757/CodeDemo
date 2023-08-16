@@ -4,6 +4,7 @@ import com.iric.util.SleepUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class WaitNotify {
@@ -14,6 +15,7 @@ public class WaitNotify {
     public static void main(String[] args) throws InterruptedException {
         Thread waitThread = new Thread(new Wait(),"WaitThread");
         waitThread.start();
+        waitThread.interrupt();
         TimeUnit.SECONDS.sleep(1);
         Thread notifyThread = new Thread(new Notify(),"NotifyThread");
         notifyThread.start();

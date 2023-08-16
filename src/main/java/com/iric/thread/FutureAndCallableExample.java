@@ -13,10 +13,10 @@ public class FutureAndCallableExample {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         // futureCallable();
-        // futureIsDone();
+         futureIsDone();
         // futureCancel();
         //invokeAll();
-        invokeAny();
+        //invokeAny();
     }
 
     /**
@@ -49,6 +49,16 @@ public class FutureAndCallableExample {
         System.out.println(result);
 
         executorService.shutdown();
+    }
+
+    public static void futureRunnable(){
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Runnable runnable = () -> {
+            System.out.println("Entered Callable");
+        };
+        Future<String> thisIsResult = executorService.submit(runnable, "this is result");
+
+
     }
 
 
