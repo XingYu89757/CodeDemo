@@ -1,5 +1,6 @@
 package com.iric.jdk8_demo;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 public class LocalDateTimeDemo {
@@ -11,5 +12,6 @@ public class LocalDateTimeDemo {
 
         System.out.println("昨天的开始时间：" + startOfYesterday);
         System.out.println("昨天的结束时间：" + endOfYesterday);
+        Instant now1 = Instant.now();
     }
 }
