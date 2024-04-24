@@ -37,7 +37,7 @@ public class FastAutoGeneratorTest extends BaseGeneratorTest {
                 .globalConfig(builder -> {
                     builder.author("yu.xing") // 设置作者
                             .dateType(DateType.TIME_PACK)// 设置时间类型
-                            .enableSwagger() // 开启 swagger 模式
+                            //.enableSwagger() // 开启 swagger 模式
                             .fileOverride() // 覆盖已生成文件
                             .outputDir(srcPath); // 指定输出目录
                 })
@@ -52,8 +52,8 @@ public class FastAutoGeneratorTest extends BaseGeneratorTest {
                     builder.entityBuilder() // 设置entity
 //                            .enableColumnConstant()
                             .enableChainModel()
-                            .enableLombok()
-                            .enableTableFieldAnnotation();
+                            .enableLombok();
+                            //.enableTableFieldAnnotation();
                     builder.controllerBuilder() // 设置controller
                             .enableRestStyle();
                     builder.serviceBuilder() // 设置service
