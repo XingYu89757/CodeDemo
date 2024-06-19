@@ -2,6 +2,7 @@ package com.iric.jvm;
 
 import cn.hutool.core.util.ByteUtil;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,14 +16,19 @@ public class newSizeDemo {
 
     //模拟内存溢出
     public static void main(String[] args) throws InterruptedException {
-        List<byte[]> result = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            byte[] b = new byte[2 * 1024 * 1024];
-            List<byte[]> list = Arrays.asList(b);
-            result.addAll(list);
-            Thread.sleep(200);
+        BigDecimal bigDecimal = new BigDecimal("-5000");
+
+        if (bigDecimal.compareTo(BigDecimal.ZERO) <0){
+            System.out.println("负数");
         }
-        System.out.println("end");
+        // List<byte[]> result = new ArrayList<>();
+        // for (int i = 0; i < 8; i++) {
+        //     byte[] b = new byte[2 * 1024 * 1024];
+        //     List<byte[]> list = Arrays.asList(b);
+        //     result.addAll(list);
+        //     Thread.sleep(200);
+        // }
+        // System.out.println("end");
     }
 
 //    public static void main(String[] args) {

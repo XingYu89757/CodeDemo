@@ -14,11 +14,17 @@ import java.util.Collections;
 
 public class FastAutoGeneratorTest extends BaseGeneratorTest {
 
-    private static final String URL = "jdbc:mysql://192.168.10.14:3306/yiling_dev?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT";
+    // private static final String URL = "jdbc:mysql://192.168.10.14:3306/yiling_dev?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT";
+    //
+    // private static final String USERNAME = "yiling_dev";
+    //
+    // private static final String PASSWORD = "yiling_dev@123";
 
-    private static final String USERNAME = "yiling_dev";
+    private static final String URL = "jdbc:mysql://192.168.10.6:11066/pms?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT";
 
-    private static final String PASSWORD = "yiling_dev@123";
+    private static final String USERNAME = "root";
+
+    private static final String PASSWORD = "Yiling123";
 
     /**
      * 数据源配置
@@ -37,7 +43,7 @@ public class FastAutoGeneratorTest extends BaseGeneratorTest {
                 .globalConfig(builder -> {
                     builder.author("yu.xing") // 设置作者
                             .dateType(DateType.TIME_PACK)// 设置时间类型
-                            //.enableSwagger() // 开启 swagger 模式
+                            .enableSwagger() // 开启 swagger 模式
                             .fileOverride() // 覆盖已生成文件
                             .outputDir(srcPath); // 指定输出目录
                 })
@@ -47,7 +53,7 @@ public class FastAutoGeneratorTest extends BaseGeneratorTest {
                             .pathInfo(Collections.singletonMap(OutputFile.xml, resourcesPath + "/mapper")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude( "order_procurement_record", "order_procurement_record_detail","order_procurement_record_log") // 设置需要生成的表名
+                    builder.addInclude( "pms_message_push_log") // 设置需要生成的表名
                             .addTablePrefix(); // 设置过滤表前缀
                     builder.entityBuilder() // 设置entity
 //                            .enableColumnConstant()
@@ -64,8 +70,8 @@ public class FastAutoGeneratorTest extends BaseGeneratorTest {
                             .enableMapperAnnotation()
                             .enableBaseResultMap()
                             .enableBaseColumnList()
-                            .formatMapperFileName("%sDao")
-                            .formatXmlFileName("%sXml");
+                            .formatMapperFileName("%sMapper")
+                            .formatXmlFileName("%sMapper");
 
                 })
 //                .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板

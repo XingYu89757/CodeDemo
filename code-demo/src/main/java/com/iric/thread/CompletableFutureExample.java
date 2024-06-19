@@ -61,7 +61,7 @@ public class CompletableFutureExample {
             }
             System.out.println("I'll run in a separate thread than the main thread.");
         });
-        future.get();
+        // future.get();
         System.out.println("method is end");
     }
 
