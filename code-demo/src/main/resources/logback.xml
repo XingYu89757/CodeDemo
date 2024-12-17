@@ -5,9 +5,8 @@
 	<appender name="FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<encoder>
-			<pattern>
-				[%d{yyyy-MM-dd HH:mm:ss}] %-5level [%thread] %logger{15} [%line] -%msg%n
-			</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%X{traceId}] %logger{50}:%L - %msg%n</pattern>
+
 			<charset>UTF-8</charset> <!-- 此处设置字符集 -->
 		</encoder>
 
@@ -25,11 +24,8 @@
 	<!-- Console output -->
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>
-				<!--| [%p][%c][%M][%L]-->
-				<!--[%-5level] [%date{yyyy-MM-dd HH:mm:ss}] | %msg%n-->
-				[%d{yyyy-MM-dd HH:mm:ss}] %-5level [%thread] %logger{15} [%line] -%msg%n
-			</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%X{traceId}] %logger{50}:%L - %msg%n</pattern>
+
 			<charset>UTF-8</charset> <!-- 此处设置字符集 -->
 		</encoder>
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">

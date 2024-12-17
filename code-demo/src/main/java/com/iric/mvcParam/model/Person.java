@@ -5,11 +5,13 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author yu.xing
  */
 @Data
-public class Person {
+public class Person implements Serializable {
     /**
      * id
      */

@@ -20,19 +20,26 @@ public class FastAutoGeneratorTest extends BaseGeneratorTest {
     //
     // private static final String PASSWORD = "yiling_dev@123";
 
-    private static final String URL = "jdbc:mysql://192.168.10.6:11066/pms?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT";
+    // private static final String URL = "jdbc:mysql://192.168.10.6:11066/pms?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT";
+    //
+    // private static final String USERNAME = "root";
+    //
+    // private static final String PASSWORD = "Yiling123";
 
-    private static final String USERNAME = "root";
+    //pms数据库
+    private static final String URL = "jdbc:mysql://36.138.168.240:3306/pms?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT";
 
-    private static final String PASSWORD = "Yiling123";
+    private static final String USERNAME = "pms";
+
+    private static final String PASSWORD = "DTqW1V1BlpbJ";
 
     /**
      * 数据源配置
      */
     private static final DataSourceConfig.Builder DATA_SOURCE_CONFIG = new DataSourceConfig
-            .Builder("jdbc:mysql://192.168.10.14:3306/yiling_dev?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT",
-            "yiling_dev",
-            "yiling_dev@123");
+            .Builder("jdbc:mysql://36.138.168.240:3306/pms?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT",
+            "pms",
+            "DTqW1V1BlpbJ");
 
 
     public static void main(String[] args) throws SQLException {
@@ -43,7 +50,7 @@ public class FastAutoGeneratorTest extends BaseGeneratorTest {
                 .globalConfig(builder -> {
                     builder.author("yu.xing") // 设置作者
                             .dateType(DateType.TIME_PACK)// 设置时间类型
-                            .enableSwagger() // 开启 swagger 模式
+                            //.enableSpringdoc() // 开启 swagger 模式
                             .fileOverride() // 覆盖已生成文件
                             .outputDir(srcPath); // 指定输出目录
                 })
@@ -53,11 +60,12 @@ public class FastAutoGeneratorTest extends BaseGeneratorTest {
                             .pathInfo(Collections.singletonMap(OutputFile.xml, resourcesPath + "/mapper")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude( "pms_message_push_log") // 设置需要生成的表名
+                    builder.addInclude( "pms_hd_invite_customers") // 设置需要生成的表名
                             .addTablePrefix(); // 设置过滤表前缀
                     builder.entityBuilder() // 设置entity
 //                            .enableColumnConstant()
                             .enableChainModel()
+                            // .enableTableFieldAnnotation()
                             .enableLombok();
                             //.enableTableFieldAnnotation();
                     builder.controllerBuilder() // 设置controller

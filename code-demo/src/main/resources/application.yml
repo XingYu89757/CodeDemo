@@ -12,3 +12,7 @@ logging:
   level:
     ROOT: warn
     com.iric: debug
+
+ExceptionMsgBot:
+  url: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=bd650041-fbb2-4584-b048-79cc3a685b0c
+  alarm: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=bd650041-fbb2-4584-b048-79cc3a685b0c

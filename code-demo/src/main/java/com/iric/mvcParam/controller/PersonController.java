@@ -1,6 +1,13 @@
 package com.iric.mvcParam.controller;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.iric.mvcParam.model.Person;
+import com.iric.util.DeepCopyUtil;
+import com.iric.util.PojoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -9,9 +16,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author yu.xing
@@ -168,6 +173,34 @@ public class PersonController {
     @PostMapping("/testModelAttribute")
     public void testModelAttribute(@ModelAttribute("userId") String userId, Person person) {
         log.info("userId:{}", userId);
+    }
+
+    public static void main(String[] args) {
+        Person tom = new Person();
+        tom.setName("tom");
+        tom.setId(123);
+        tom.setAge(12);
+        Person jerry = new Person();
+        jerry.setName("jerry");
+        jerry.setId(1234);
+        jerry.setAge(123);
+        List<Person> personList = new ArrayList<>();
+
+        personList.add(tom);
+        personList.add(jerry);
+        log.info("personList:{}",personList);
+        // List<Person> map = PojoUtils.map(personList, Person.class);
+        List<Person> newPersonList = new ArrayList<>();
+        List<Person> personList1 = DeepCopyUtil.deepCopy(personList);
+        Collections.copy(personList, newPersonList);
+        // List<Person> map = ObjectUtil.clone(personList);
+        Person person = personList.get(0);
+        log.info("log1:{}",person);
+        person.setName("jack");
+        log.info("personList:{}",personList);
+        log.info("newPersonList:{}",personList1);
+
+
     }
 
 }

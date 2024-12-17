@@ -1,9 +1,15 @@
 package com.iric.util;
 
+import cn.hutool.core.date.DateField;
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
+import lombok.extern.slf4j.Slf4j;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Slf4j
 public class DateUtils {
     /**
      * long类型转换成日期
@@ -18,8 +24,10 @@ public class DateUtils {
         return date;
     }
     public static void main(String[] args) throws ParseException {
-        long time = 1656664438000L;
-        System.out.println("----->转换结果：" + longToDate(time));
+        DateTime startTime = DateUtil.beginOfDay(new Date()).offset(DateField.YEAR, -1);
+
+        log.info("startTime:" + startTime.toString());
+
     }
 
     // date类型转换为String类型
